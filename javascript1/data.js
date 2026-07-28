@@ -40,3 +40,10 @@ let data; //undefined =>  値が未定義であることを表すデータ型で
 -  配列型　(array) =>  要素の並びを表すデータ型です。（データの集合です。）
 
 */
+
+let person = {
+    name: "太郎",
+    age:20
+}//オブジェクト型　(object)
+
+let numbers = [1,2,3,4,5,6,7,8,9]//配列型　(array)
