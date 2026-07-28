@@ -89,9 +89,27 @@ sayHello();
 
 /*
 
+functionの後に関数名をつける（この場合はsayHello）
+function sayHello(引数　＝＞　関数に渡すデータ) {
+     //実行したいものをここにいれる
+    console.log("Hello" + hako)
+};
+関数の呼び出し
+sayHello();
+
+*/
 
 
 
+/* Javascriptの記述
+
+①
+
+②
+
+③
+
+④
 
 */
 
