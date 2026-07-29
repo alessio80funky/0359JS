@@ -47,6 +47,12 @@ console.log(fruit);
 console.log(fruit[0]);///配列のプロパティの指定
 console.log(fruit[1],fruit[2])
 
+///配列のネスト
+//              0         1         2
+let num2 = [ [1,2,3], [4,5,6,], [7,8,9]];
+
+console.log(num2[1][0]);//4
+
 
 //オブジェクトに関しての補足です。
 
@@ -60,10 +66,74 @@ let human = {
 console.log(human.age);//オブジェクトのプロパティの指定
 console.log(human.name, human.age)
 
+//オブジェクトのネスト
 
 let human2 = {
 //　キー    値
     name: "太郎",
-    age:20
-
+    age:20,
+    adress:{
+        city:"Osaka",
+        ward: "chuo-ward",
+    }
 }
+
+console.log(human2.adress.city)
+
+//関数に関しての補足：
+
+//関数は処理の塊です。つまりデータ処理する処理機です。
+
+//function式
+
+let name4 = "alice";
+
+function sayHello(){
+    console.log(`Hello ${name4}`);
+};
+
+sayHello();
+
+//関数名宣言式
+
+let hello = function(){
+    console.log(`You're name is ${name4}?`);
+};
+
+hello();
+
+//アロー関数
+
+let Aisatsu = () => {
+    console.log(`Yes I'm ${name4}`);
+}
+
+Aisatsu();
+
+//引数
+
+let naming = "taro";
+let naming2 = "saburo";
+
+function greet(naming, naming2){
+    console.log("こんにちは" + naming + "さん");
+    console.log("こんにちは" + naming2 + "さん");
+};
+
+greet(naming ,naming2);
+
+
+//戻り値を使う場合
+x = 4;
+y = 2;
+
+total = [];
+
+function add(a, b){
+    return total = a * b; ///データを処理して返す
+};
+
+add(x, y);
+
+console.log(total);
+
