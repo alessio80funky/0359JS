@@ -12,7 +12,12 @@ log.textContent = "✅ .classList.add('active') 実行中";
  * ※ あらかじめ hidden が付いている想定
  */
 
+
+remove.addEventListener("click", () => {
+  
 box.classList.remove("hidden"); // hiddenクラスを削除
+  log.textContent = "削除しました";
+})
 
 
 /** ✅

@@ -1,3 +1,9 @@
-console.log(document.querySelector("#colorPicker").value);
+let color = document.querySelector("#colorPicker");
 
-document.querySelector("#colorText").textContent = "カラーコード：";
+let text = document.querySelector("#colorText");
+
+function colorBg(){
+    document.body.style.backgroundColor = color.value;
+}
+
+color.addEventListener("input", colorBg)
