@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input, button{
+
+            margin: 10px;
+            padding: 10px;
+            align-items: center;
+        }
+
+
+        div#message {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .login-ok{
+            color: green;
+        }
+
+        .login-error{
+            color: red;
+        }
+
+        .deactivated{
+            color: orange;
+        }
+
+
+    </style>
+    <title>ログイン</title>
+</head>
+<body>
+
+<div class="container">
+
+    
+    <h1>ログイン</h1>
+
+    <input id="username" placeholder="ユーザー名">
+    <input id="password" placeholder="パスワード" type="password">
+    <button id="loginBtn">ログイン</button>
+
+     <div id="message"></div>
+
+</div>
+    
+    
+   
+
+
+    <script>
+
+        const users = [
+            { username: "user1", password: "pass1", active:true },
+            { username: "user2", password: "pass2", active:true },
+            { username: "user3", password: "pass3", active:false }
+        ]
+        
+
+
+
+        document.getElementById("loginBtn").addEventListener("click", function(){
+
+            const user = document.getElementById("username").value;
+            const pass = document.getElementById("password").value;
+
+            const msg = document.getElementById("message");
+
+            const foundUser = users.find(x => x.username === user);
+
+            if(!foundUser){
+                msg.textContent = "ユーザーが見つかりません";
+                msg.className = "login-error";
+                return;
+            }
+
+            if(!foundUser.active){
+                msg.textContent = "このユーザーは無効です";
+                msg.className = "deactivated";
+                return;
+            }
+
+
+            if(foundUser.password === pass){
+                
+                msg.textContent = "ログイン成功";
+                msg.className = "login-ok";
+            } else {
+                msg.textContent = "パスワードが間違っています";
+                msg.className = "login-error";
+            }
+
+        })
+
+
+
+    </script>
+</body>
+</html>
