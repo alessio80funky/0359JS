@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>非同期処理</title>
+</head>
+<body>
+    <h1>合格者一覧</h1>
+    
+    <ul id="result"></ul>
+
+    <script>
+        /*
+        fetch("./data.json")
+        .then(r => r.json())
+        .then(d => {
+            const result = document.querySelector("#result");
+
+            d.forEach(function(person){
+                const list = document.createElement("li");
+
+                list.textContent = `${person.name}さん${person.score}点`;
+
+                result.appendChild(list);
+            
+            })
+        })
+        .catch(e => console.log(e))
+        */
+        
+            async function loadData() {
+                try{
+                const res = await fetch("./data.json");
+                const data =  await res.json();
+                const result = document.querySelector("#result");
+
+                data.forEach(function(person){
+                const list = document.createElement("li");
+
+                list.textContent = `${person.name}さん${person.score}点`;
+
+                result.appendChild(list);
+                })
+
+            }catch{
+                console.log("message:" + error.name + error.message)
+            }
+            }
+
+            loadData();
+
+    </script>
+</body>
+</html>
