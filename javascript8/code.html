@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #acc7e3;
+        }
+
+        .app {
+            width: min(90%, 600px);
+            padding: 32px;
+            text-align: center;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .app h1 {
+            margin: 0 0 24px;
+            color: #2c3e50;
+            font-size: 2rem;
+        }
+
+        .app canvas {
+            display: block;
+            max-width: 100%;
+            margin: 0 auto 24px;
+        }
+
+        .app button {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            background-color: #3478c5;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .app button:hover {
+            background-color: #2864a7;
+            transform: translateY(-2px);
+        }
+
+        .app button:active {
+            transform: translateY(0);
+        }
+
+    </style>
+    <title>Chart.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+    <div class="app">
+
+        <h1 id="title"></h1>
+        
+          <div id="result"></div>
+
+
+        <canvas id="Chart" width="400" height="200"></canvas>
+
+
+        <button id="btn">表示</button>
+
+    </div>
+
+
+    <script>
+
+        document.getElementById("btn").addEventListener("click", async function(){
+            try{
+                const res = await fetch("./data.json");
+                const data = await res.json();
+                const result = () => {
+                    const title = document.getElementById("title").textContent = data.title || "グラフ";
+                    const colors = {
+                        background:"#9BD0F5",
+                        border:"rgba(143,91,129,0.5)"
+                    }
+                    const ctx = document.getElementById("Chart");
+
+                    new Chart(ctx, {
+                    type: 'line',//表示の種類
+                    data: {//データの設定
+                    labels: data.labels || "データありません",
+                    datasets: data.datasets.map((ds, i) => ({//データのペアリング
+                        ///データの共通のスタイリング
+                        ...ds,
+                        borderWith:4,
+                        pointRadius:4,
+                        backgroungColor: colors.background,
+                        borderColor: colors.border
+                    }))
+                    },
+                    //追加設定（あまり使わない）
+                    options: {
+                     responsive: true,
+                     beginAtZero: true,
+                     animations: {
+      tension: {
+        duration: 1000,
+        easing: 'linear',
+        from: 1,
+        to: 0,
+        loop: true
+      }
+            }
+                    }
+  });
+                }
+                result();
+            }catch(error){
+
+                const result = document.getElementById("result");
+                result.textContent = "message:" + error.name + error.message;
+                result.style.color = "red";
+            };  
+        });
+
+    </script>
+</body>
+</html>

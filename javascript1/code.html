@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css"><!--CSS－をインポートする-->
+    <title>Javascript</title>
+    <script></script><!--外部のライブラリーをインポートするために使うタグ-->
+</head>
+<body>
+
+    <h1>初めてのJavascript</h1>
+    <button onclick="alert('hello world')">クリック</button>
+    <button id="btn">クリック2</button>
+
+    <script>
+
+        document.getElementById("btn").addEventListener("click", () =>{
+        alert('hello world');
+        });
+
+        console.log("java\nscript");
+    </script>
+</body>
+</html>
