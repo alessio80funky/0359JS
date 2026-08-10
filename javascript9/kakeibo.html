@@ -82,8 +82,9 @@
         let transactions = [];
 
         function init(){
+            loadTransactions();
             form.addEventListener("submit",Submit)
-
+            Analytics();
             updateUI();
         }
         init();
@@ -103,7 +104,7 @@
             e.preventDefault();
 
             const description = descInput.value;
-            const amount = amountInput.value;
+            const amount = Number(amountInput.value);
             const type = selectInput.value;
 
             if(!description || !amount || amount <= 0){
@@ -166,8 +167,8 @@
 
         function updateSummary(){
 
-            const income = transactions.filter(t => t.id === "income").reduce((sum, t) => sum + t.amount, 0);
-            const expense = transactions.filter(t => t.id === "expense").reduce((sum, t) => sum + t.amount, 0);
+            const income = transactions.filter(t => t.type === "income").reduce((sum, t) => sum + t.amount, 0);
+            const expense = transactions.filter(t => t.type === "expense").reduce((sum, t) => sum + t.amount, 0);
 
             const balance = income - expense;
 
@@ -189,23 +190,30 @@
 
         function Analytics(){
             $("btn").addEventListener("click", function(){
-            const income = transactions.filter(t => t.id === "income").reduce((sum, t) => sum + t.amount, 0);
-            const expense = transactions.filter(t => t.id === "expense").reduce((sum, t) => sum + t.amount, 0);
+            const income = transactions.filter(t => t.type === "income").reduce((sum, t) => sum + t.amount, 0);
+            const expense = transactions.filter(t => t.type === "expense").reduce((sum, t) => sum + t.amount, 0);
             const balance = income - expense;
 
             $("title").textContent = "グラフ";
 
                  new Chart($("Chart"), {
-                    type: 'line',//表示の種類
+                    type: 'bar',//表示の種類
                     data: {//データの設定
                    labels:["収入","支出","合計"],
-                   data:[income, expense, balance],
-                   borderWidth:2,
+                    datasets:[{
+                        label: "金額",
+                        data: [income, expense, balance],
+                        backgroundColor: ["#28a745", "#dc3545", "#667eea"],
+                        borderWidth:2
+                    }]
                     },
-                    //追加設定（あまり使わない）
                     options: {
                      responsive: true,
-                     beginAtZero: true,
+                     scales:{
+                        y:{
+                            beginAtZero:true
+                        }
+                     }
                     }});
             })
         }
