@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kakeibo App</title>
     <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -13,40 +14,56 @@
         <div class="summary">
             <div class="summary-item">
                 <span class="label">収入</span>
-                <span class="amount income">0</span>
+                <span class="amount income" id="totalIncome">0</span>
             </div>
             <div class="summary-item">
                  <span class="label">支出</span>
-                 <span class="amount expense">0</span>
+                 <span class="amount expense" id="totalExpense">0</span>
             </div>
             <div class="summary-item">
                  <span class="label">合計</span>
-                 <span class="amount balance">0</span>
+                 <span class="amount balance" id="balance">0</span>
             </div>
         </div>
 
         <div class="form-container">
-            <form>
+            <form id="transactionForm">
                 <div class="form-group">
-                    <label for="">取引の内容：</label>
-                    <input type="text">
+                    <label for="description">取引の内容：</label>
+                    <input type="text" id="description" required>
                 </div>
                 <div class="form-group">
-                    <label for="">取引の金額：</label>
-                    <input type="text">
+                    <label for="amount">取引の金額：</label>
+                    <input type="text" id="amount" required>
                 </div>
                 <div class="form-group">
-                    <label for="">取引の種類：</label>
-                    <select id="">
-                        <option value="">支出</option>
-                        <option value="">収入</option>
+                    <label for="type">取引の種類：</label>
+                    <select id="type">
+                        <option value="expense">支出</option>
+                        <option value="income">収入</option>
                     </select>
                 </div>
                 <button class="btn-submit">追加</button>
             </form>
         </div>
 
+
+        <div class="transaction-container"> 
+            <h2>取引履歴</h2>
+            <ul class="transacrion-list" id="transactionList"></ul>
+        </div>
+
+        <div class="chart-container" id="chartContainer">
+            <h1>タイトル</h1>
+            <canvas id="Chart" width="400" height="200"></canvas>
+            <button id="btn" class="btn-submit">表示</button>
+            <button>🔃</button>
+        </div>
+
     </div>
     
+    <script>
+
+    </script>
 </body>
 </html>
