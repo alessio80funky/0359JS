@@ -50,7 +50,7 @@
 
         <div class="transaction-container"> 
             <h2>取引履歴</h2>
-            <ul class="transacrion-list" id="transactionList"></ul>
+            <ul class="transaction-list" id="transactionList"></ul>
         </div>
 
         <div class="chart-container" id="chartContainer">
@@ -63,6 +63,66 @@
     </div>
     
     <script>
+        ///合計セクション
+        const totalIncomeEl = document.getElementById("totalIncome");
+        const totaleExpense = document.getElementById("totalExpense");
+        const balanceEl = document.getElementById("balance");
+        //フォームセクション
+        const form = document.getElementById("transactionForm");
+        const descInput = document.getElementById("description");
+        const amountInput = document.getElementById("amount");
+        const selectInput = document.getElementById("type");
+        //取引履歴セクション
+        const transList = document.getElementById("transactionList");
+        //グラフ
+        const $ = id => document.getElementById(id);
+
+        const STORAGE_KEY = "kakekibo_260810";
+
+        let transactions = [];
+
+        function init(){
+            form.addEventListener("submit",Submit)
+        }
+        init();
+
+        function loadTransactions(){
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if(stored){
+                transactions = JSON.parse(stored)
+            }
+        };
+
+        function saveTransactions(){
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions))
+        };
+
+        function Submit(e){
+            e.preventDefault();
+
+            const description = descInput.value;
+            const amount = amountInput.value;
+            const type = selectInput.value;
+
+            if(!description || !amount || amount <= 0){
+                alert("正しい内容を入力");
+                return;
+            }
+
+            const transaction = {
+                id: Date.now(),
+                description,
+                amount,
+                type,
+                date: new Date().toLocaleString("ja-JP")
+            }
+
+            transactions.unshift(transaction);
+            saveTransactions();
+
+            form.reset();
+        }
+
 
     </script>
 </body>
