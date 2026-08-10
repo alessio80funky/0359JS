@@ -34,7 +34,7 @@
                 </div>
                 <div class="form-group">
                     <label for="amount">取引の金額：</label>
-                    <input type="text" id="amount" required>
+                    <input type="number" id="amount" required>
                 </div>
                 <div class="form-group">
                     <label for="type">取引の種類：</label>
@@ -54,10 +54,10 @@
         </div>
 
         <div class="chart-container" id="chartContainer">
-            <h1>タイトル</h1>
+            <h1 id="title"></h1>
             <canvas id="Chart" width="400" height="200"></canvas>
             <button id="btn" class="btn-submit">表示</button>
-            <button>🔃</button>
+            <button onclick="location.reload()">🔃</button>
         </div>
 
     </div>
@@ -144,7 +144,7 @@
             const list = document.createElement("li");
             list.className = `transaction-item ${transaction.type}`; 
                                                 // 値　　　if true else false
-            const symbol = transactions.type === "income"  ? "+" : "-";
+            const symbol = transaction.type === "income"  ? "+" : "-";
             
               list.innerHTML=`<div class="transaction-info">
                 <div class="transaction-description">${transaction.description}</div>
@@ -187,6 +187,28 @@
 
         }
 
+        function Analytics(){
+            $("btn").addEventListener("click", function(){
+            const income = transactions.filter(t => t.id === "income").reduce((sum, t) => sum + t.amount, 0);
+            const expense = transactions.filter(t => t.id === "expense").reduce((sum, t) => sum + t.amount, 0);
+            const balance = income - expense;
+
+            $("title").textContent = "グラフ";
+
+                 new Chart($("Chart"), {
+                    type: 'line',//表示の種類
+                    data: {//データの設定
+                   labels:["収入","支出","合計"],
+                   data:[income, expense, balance],
+                   borderWidth:2,
+                    },
+                    //追加設定（あまり使わない）
+                    options: {
+                     responsive: true,
+                     beginAtZero: true,
+                    }});
+            })
+        }
     </script>
 </body>
 </html>
