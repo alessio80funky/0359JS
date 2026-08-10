@@ -83,6 +83,8 @@
 
         function init(){
             form.addEventListener("submit",Submit)
+
+            updateUI();
         }
         init();
 
@@ -119,10 +121,71 @@
 
             transactions.unshift(transaction);
             saveTransactions();
-
+            updateUI();
             form.reset();
         }
 
+        function deleteTransaction(id){
+            transactions = transactions.filter(t => t.id !== id);
+            saveTransactions();
+            updateUI();
+        }
+
+        function updateUI(){
+            updateTransactionList();
+            updateSummary();
+        }
+
+        function updateTransactionList(){
+            transList.innerHTML = "";
+
+            transactions.forEach(transaction => {
+                
+            const list = document.createElement("li");
+            list.className = `transaction-item ${transaction.type}`; 
+                                                // 値　　　if true else false
+            const symbol = transactions.type === "income"  ? "+" : "-";
+            
+              list.innerHTML=`<div class="transaction-info">
+                <div class="transaction-description">${transaction.description}</div>
+                <small style="color: #999;">${transaction.date}</small>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span class="transaction-amount ${transaction.type}">
+                    ${symbol}¥${transaction.amount.toLocaleString()}
+                </span>
+                <button class="btn-delete" onclick="deleteTransaction(${transaction.id})">削除</button>
+            </div>`;  
+
+            transList.appendChild(list);
+
+            })
+
+          
+        }
+
+        function updateSummary(){
+
+            const income = transactions.filter(t => t.id === "income").reduce((sum, t) => sum + t.amount, 0);
+            const expense = transactions.filter(t => t.id === "expense").reduce((sum, t) => sum + t.amount, 0);
+
+            const balance = income - expense;
+
+            totalIncomeEl.textContent = `${income.toLocaleString()}`;
+            totaleExpense.textContent = `${expense.toLocaleString()}`;
+            balanceEl.textContent = `${balance.toLocaleString()}`;
+
+            if(balance > 0){
+                balanceEl.style.color = "green";
+            }else if (balance < 0) {
+                balanceEl.style.color = "red";
+            }else{
+                balanceEl.style.color = "blue";
+            }
+
+
+
+        }
 
     </script>
 </body>
